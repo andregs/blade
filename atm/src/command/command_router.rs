@@ -1,5 +1,6 @@
 use std::collections::HashMap;
 
+use ::attr::inject;
 use crate::command::*;
 
 pub struct CommandRouter {
@@ -8,7 +9,9 @@ pub struct CommandRouter {
 }
 
 impl CommandRouter {
+    #[inject]
     pub fn new() -> CommandRouter {
+        println!("CommandRouter new");
         let commands = HashMap::new();
         
         CommandRouter {
@@ -17,6 +20,7 @@ impl CommandRouter {
     }
 
     pub fn route(&self, input: String) -> Status {
+        // println!("CommandRouter route");
         if input.is_empty() {
             return self.invalid_command(input);
         }
