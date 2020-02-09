@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 
 use ::attr::inject;
-use crate::command::*;
+use super::*;
 
 pub struct CommandRouter {
     
@@ -10,12 +10,13 @@ pub struct CommandRouter {
 
 impl CommandRouter {
     #[inject]
-    pub fn new() -> CommandRouter {
+    pub fn new(command: HelloWorldCommand) -> CommandRouter {
         println!("CommandRouter new");
-        let commands = HashMap::new();
+        let mut commands: HashMap<String, Box<dyn Command>> = HashMap::new();
+        commands.insert(command.key(), Box::new(command));
         
         CommandRouter {
-            commands
+            commands,
         }
     }
 

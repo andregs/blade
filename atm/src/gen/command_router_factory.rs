@@ -1,25 +1,33 @@
-use dagger;
+use dagger::internal;
 
 use command::CommandRouter;
 
-static INSTANCE = CommandRouter_Factory{};
+// because #inject in CommandRouter's constructor
+pub struct CommandRouter_Factory {
+    commandProvider: internal::Provider<HelloWorldCommand>,
+}
 
 // because #inject in CommandRouter's constructor
-pub struct CommandRouter_Factory;
-
-// because #inject in CommandRouter's constructor
-impl dagger::internal::Factory<CommandRouter> for CommandRouter_Factory {
-    pub fn get() -> CommandRouter {
-        self.new_instance()
+impl internal::Factory<CommandRouter> for CommandRouter_Factory {
+    
+    // because params in CommandRouter's constructor
+    pub fn new(commandProvider: internal::Provider<HelloWorldCommand>) -> CommandRouter_Factory {
+        CommandRouter_Factory {
+            commandProvider
+        }
+    }
+    
+    pub fn get(&self) -> CommandRouter {
+        self.new_instance(self.commandProvider.get())
     }
 
-    fn create() -> CommandRouter_Factory {
+    pub fn create(commandProvider: internal::Provider<HelloWorldCommand>) -> CommandRouter_Factory {
         println!("CommandRouter_Factory create");
-        INSTANCE
+        CommandRouter_Factory::new(commandProvider)
     }
 
-    fn new_instance(&self) -> CommandRouter {
+    pub fn new_instance(&self, command: HelloWorldCommand) -> CommandRouter {
         println!("CommandRouter_Factory new_instance");
-        CommandRouter{}
+        CommandRouter::new(command)
     }
 }

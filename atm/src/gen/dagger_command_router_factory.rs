@@ -22,7 +22,7 @@ impl CommandRouterFactory for DaggerCommandRouterFactory {
 
     fn router(&self) -> CommandRouter {
         println!("DaggerCommandRouterFactory router");
-        CommandRouter::new()
+        CommandRouter::new(HelloWorldCommand::new())
     }
 
 }
