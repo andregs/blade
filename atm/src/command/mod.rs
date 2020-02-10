@@ -9,3 +9,6 @@ pub use command_router_factory::*;
 
 mod hello_world_command;
 pub use hello_world_command::*;
+
+mod hello_world_module;
+pub use hello_world_module::*;

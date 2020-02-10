@@ -10,10 +10,10 @@ pub struct CommandRouter {
 
 impl CommandRouter {
     #[inject]
-    pub fn new(command: HelloWorldCommand) -> CommandRouter {
+    pub fn new(command: Box<dyn Command>) -> CommandRouter {
         println!("CommandRouter new");
-        let mut commands: HashMap<String, Box<dyn Command>> = HashMap::new();
-        commands.insert(command.key(), Box::new(command));
+        let mut commands = HashMap::new();
+        commands.insert(command.key(), command);
         
         CommandRouter {
             commands,

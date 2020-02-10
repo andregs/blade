@@ -21,6 +21,18 @@ pub fn inject(attr: TokenStream, item: TokenStream) -> TokenStream {
     implem(attr, item)
 }
 
+#[proc_macro_attribute]
+pub fn module(attr: TokenStream, item: TokenStream) -> TokenStream {
+    println!("#[module]");
+    implem(attr, item)
+}
+
+#[proc_macro_attribute]
+pub fn binds(attr: TokenStream, item: TokenStream) -> TokenStream {
+    println!("#[binds]");
+    implem(attr, item)
+}
+
 fn implem(attr: TokenStream, item: TokenStream) -> TokenStream {
     // Construct a representation of Rust code as a syntax tree
     // that we can manipulate
